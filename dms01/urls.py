@@ -24,6 +24,7 @@ from django.conf import settings
 urlpatterns = [
     ##media配置——配合settings中的MEDIA_ROOT的配置，就可以在浏览器的地址栏访问media文件夹及里面的文件了
     re_path(r'media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
+    re_path(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}, name='static'),
     path("api-token-auth/", views.obtain_auth_token),  # Token post
     path("api-auth/", include("rest_framework.urls")),
     path("docs/", include_docs_urls(title="NRS DMS API", description="NRS DMS Django REST framework")),

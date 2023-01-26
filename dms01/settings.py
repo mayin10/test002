@@ -139,7 +139,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATIC_ROOT = 'static'
+STATIC_DIRS = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -153,9 +154,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ALLOWED_HOSTS =['*']
 
 CORS_ALLOWED_ORIGINS = [
-    "127.0.0.1:8001",
-    "108.143.98.40:8001",
-    "108.143.98.40:80",
+    "http://127.0.0.1:8001",
+    "http://108.143.98.40:8001",
+    "http://108.143.98.40:80",
     "http://localhost:80",
     "http://localhost:5173",
     "http://127.0.0.1:80",
