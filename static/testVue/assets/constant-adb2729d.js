@@ -1,0 +1,1 @@
+let e="http://108.143.98.40/dmsAPi/",o={login:"http://108.143.98.40/api-token-auth/",user:e+"user/",user:e+"user/",role:e+"role/",document:e+"document/",folder:e+"folder/",role_folder:e+"role-folder/",file:e+"file/"};export{o as c};
