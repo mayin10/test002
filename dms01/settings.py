@@ -163,6 +163,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://20.79.29.101:80",
     "http://20.79.29.101:8080",
     "http://20.79.29.101:8088",
+    "http://dms:8088",
+    "http://dms:8081",
 ]
 
 REST_FRAMEWORK = {
