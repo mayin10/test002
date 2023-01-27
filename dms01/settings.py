@@ -134,7 +134,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
@@ -151,7 +150,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #ALLOWED_HOSTS = ['192.168.2.157','127.0.0.1']
-ALLOWED_HOSTS =['*']
+ALLOWED_HOSTS =[
+    "http://127.0.0.1:8001",
+    "http://108.143.98.40:8001",
+    "http://108.143.98.40:80",
+    "http://localhost:80",
+    "http://localhost:5173",
+    "http://127.0.0.1:80",
+    "http://127.0.0.1"]
 
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:8001",
