@@ -23,8 +23,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure--_tvv1xt^h2)00is6nwxcd5zwl6%l348qep2xkx(rw7_6a0)n&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = True
-DEBUG = False
+DEBUG = True
+#DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -65,7 +65,7 @@ ROOT_URLCONF = 'dms01.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -160,11 +160,12 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:80",
     "http://127.0.0.1",
+
+    "http://20.79.29.101"
     "http://20.79.29.101:80",
     "http://20.79.29.101:8080",
     "http://20.79.29.101:8088",
-    "http://dms:8088",
-    "http://dms:8081",
+
 ]
 
 REST_FRAMEWORK = {

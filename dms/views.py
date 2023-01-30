@@ -11,12 +11,32 @@ from rest_framework import status
 from rest_framework.authentication import BasicAuthentication, SessionAuthentication, TokenAuthentication
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
-
+from django.http import HttpResponse
+from django.template import loader
+from django.shortcuts import get_object_or_404, render
 import os
 
 
 def test01(request):
-    return HttpResponse('I am OK')
+    folder = Folder.objects.all()
+    output = ', '.join([q.name for q in folder])
+    return render(request, 'dms/test.html',{'folder':folder})
+    #return HttpResponse(output)
+
+def test02(request):
+    folder = Folder.objects.all()
+    output = ', '.join([q.name for q in folder])
+    return render(request, 'dms/test02.html',{'folder':folder})
+    #return HttpResponse(output)
+
+
+def testSite(request):
+    folder = Folder.objects.all()
+    output = ', '.join([q.name for q in folder])
+    return render(request, 'dms/test02.html',{'folder':folder})
+
+
+
 
 
 

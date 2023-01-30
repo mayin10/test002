@@ -1,0 +1,32 @@
+.mynav{
+
+  height:50px;
+  background-color: rgba(191, 191, 191, 0.15);
+ position: fixed;
+ top:0px;
+}
+
+.mycontainer {
+  position: fixed;
+   top:100px;
+   right: 0px;
+}
+
+
+.left-content {
+  min-height:100%;
+  width: 350px;
+  padding: 0 10px 10px;
+  background-color: rgba(191, 191, 191, 0.15);
+  box-shadow: -5px 0 14px -8px rgba(0, 0, 0, 0.25) inset;
+  position: relativ;
+  display: inline-block
+}
+
+.right-content {
+
+
+}
+#treeview {
+  height: 400px;
+}
