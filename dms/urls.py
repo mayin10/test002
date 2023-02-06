@@ -17,6 +17,7 @@ router.register(prefix="role-folder", viewset=views.RoleFolderViewSet)
 urlpatterns = [
     path('test01', views.test01, name='test01'),
     path('test02', views.test02, name='test02'),
+    path('testsite', views.testSite, name='testSite'),
     path('test', views.test, name='test'),
     path("", include(router.urls))
 ]

@@ -24,7 +24,8 @@ class UserModelSerializer(serializers.ModelSerializer):
             return user
 
 class EmployeeModelSerializer(serializers.ModelSerializer):
-    user = UserModelSerializer(many=False)
+
+
     class Meta:
         model = Employee
         fields = "__all__"
@@ -37,6 +38,7 @@ class RoleModelSerializer(serializers.ModelSerializer):
         fields = ["id", "name"]
 
 class NodeModelSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Node
         fields = "__all__"
@@ -47,17 +49,15 @@ class RoleNodeModelSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-
 class SiteModelSerializer(serializers.ModelSerializer):
+    #project = ProjectModelSerializer(many=True)
     class Meta:
         model = Site
-        fields = "__all__"
+        fields = ["id", "name"]
 
 
-class ProjectModelSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Project
-        fields = "__all__"
+
+
 
 
 class DocumentModelSerializer(serializers.ModelSerializer):
@@ -65,7 +65,12 @@ class DocumentModelSerializer(serializers.ModelSerializer):
         model = Document
         fields = "__all__"
 
+class ProjectModelSerializer(serializers.ModelSerializer):
+    site = SiteModelSerializer(many=False)
 
+    class Meta:
+        model = Project
+        fields = "__all__"
 class FolderModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Folder

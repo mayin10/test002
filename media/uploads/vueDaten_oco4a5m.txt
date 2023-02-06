@@ -1,0 +1,42 @@
+
+cd D:\vue\dms2
+
+
+How do I check my vue version?
+vue --version
+
+
+Vue安装及卸载插件
+npm uninstall -g @vue/cli
+npm install -g @vue/cli
+
+
+npm install axios
+npm uninstall axios
+
+https://vuejs.org/guide/quick-start.html
+
+Node --version
+
+
+npm run dev     npm run build
+
+element-plus
+npm install element-plus --save
+https://element-plus.org/en-US/guide/quickstart.html
+
+
+
+npm install less less-loader --save-dev
+
+axios
+https://www.npmjs.com/package/vue-axios
+npm install --save axios vue-axios
+
+Node js
+vue -V
+npm uninstall vue-cli -g
+npm install @vue/cli -g
+vue ui
+
+

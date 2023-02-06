@@ -15,6 +15,8 @@ from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import get_object_or_404, render
 import os
+from django.core import serializers
+import json
 
 
 def test01(request):
@@ -26,14 +28,17 @@ def test01(request):
 def test02(request):
     folder = Folder.objects.all()
     output = ', '.join([q.name for q in folder])
-    return render(request, 'dms/test02.html',{'folder':folder})
+    return render(request, 'dms/testSite.html',{'folder':folder})
     #return HttpResponse(output)
 
 
 def testSite(request):
-    folder = Folder.objects.all()
-    output = ', '.join([q.name for q in folder])
-    return render(request, 'dms/test02.html',{'folder':folder})
+    data = Site.objects.all()
+    list = []
+    for d1 in data:
+        tinydict = {'id': d1.id, 'text': d1.name, 'expanded':True}
+        list.append(tinydict)
+    return render(request, 'dms/testSite.html', {'output': list})
 
 
 
@@ -152,8 +157,9 @@ class FolderViewSet(ModelViewSet):
     serializer_class = FolderModelSerializer
 
 class FileViewSet(ModelViewSet):
-    queryset = File.objects.all()
-    serializer_class = FileModelSerializer
+   # queryset = File.objects.all()
+   queryset = File.objects.order_by("-id")
+   serializer_class = FileModelSerializer
 
 
 class RoleFolderViewSet(ModelViewSet):

@@ -1,0 +1,181 @@
+python虚拟环境
+
+
+Creating Virtual Environments
+cd..
+D:\PythonVenv\v01\cd>activate.bat
+(env01) D:\PythonVenv\env01>
+
+
+cd D:\django\dms01
+python manage.py runserver
+
+
+pip install Django
+django-admin startproject dms01
+python manage.py startapp dms
+
+python manage.py makemigrations     XXXX
+python manage.py sqlmigrate dms 0001
+python manage.py migrate
+python manage.py createsuperuser
+
+pip install djangorestframework
+pip install coreapi
+pip install djangorestframework-jwt
+pip install django-cors-headers
+
+Token create
+python manage.py drf_create_token admin
+
+
+table to Model
+python manage.py inspectdb > nrs/models.py
+
+
+
+
+
+
+uwsgi
+pip install uwsgi
+
+
+
+
+
+
+
+
+ pip install django-cors-headers
+https://pypi.org/project/django-cors-headers/
+
+
+
+djangorestframework
+https://www.django-rest-framework.org/tutorial/quickstart/
+
+pip install djangorestframework-jwt
+https://jpadilla.github.io/django-rest-framework-jwt/
+
+https://pypi.org/project/itsdangerous/
+https://pypi.org/project/celery/
+
+
+LANGUAGE_CODE = 'en-us'
+TIME_ZONE = 'Europe/Berlin'
+
+cd..
+
+
+
+http://20.79.29.101:8000/
+pymysql
+pip install pymysql
+
+
+import pymysql
+pymysql.install_as_MySQLdb()
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': "nrs_dms",
+        "HOST": "20.79.29.101",
+        "PORT": 3306,
+        "USER": "MEI_AN",
+        "PASSWORD":"test123",
+    }
+}
+
+
+
+							
+
+
+assets/ncs-favicon.png
+
+virtualenv
+1. Install virtualenv：   pip install virtualenv
+2. create virtualenv：   virtualenv venv v02
+
+http://20.126.20.212/
+
+http://20.79.29.101/
+
+http://127.0.0.1/   localhost
+ipconfig
+   IPv4 Address. . . . . . . . . . . : 10.0.0.4
+   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+   Default Gateway . . . . . . . . . : 10.0.0.1
+
+winver  windows server 2019   windows iis    external IP    RDP
+
+
+
+NAT  Public IP addresse 127.0.0.1
+
+
+pip install wfastcgi
+
+DNS Server statische IP
+
+
+
+
+
+class Projekte(models):
+    
+
+    class Meta:
+        managed = False
+        db_table = 'dms_projekte'
+
+
+
+
+
+
+ python manage.py inspectdb > nrs/models.py
+
+
+
+
+
+
+
+virtualenv安装并指定python版本
+
+一些情况下，在一台电脑上需要安装不同版本的python虚拟环境，下面的方法将告诉大家如何安装虚拟环境，并指定Python版本。
+
+安装virtualenv：
+pip install virtualenv
+
+创建虚拟环境并指定PYTHON版本
+
+virtualenv venv --python=python2.7
+
+virtualenv venv --python=python3.5
+
+virtualenv venv --python=python3.11
+
+退出虚拟环境$
+
+deactivate
+
+删除虚拟环境
+rm -r venv
+
+直接删除虚拟环境所在的文件夹venv就删除了我们创建的venv虚拟环境。
+
+
+如何查看Windows系统的版本信息 
+打开“系统属性”。你可以按下Win键和Pause键来进入系统属性，或者右键点击我的电脑选择属性。 ... 查看你的Windows信息。在窗口上部显示Windows的版本。
+
+
+
+
+
+
+
+
