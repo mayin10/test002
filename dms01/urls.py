@@ -32,4 +32,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("dmsAPi/", include("dms.urls")),
     path("nrs/", include("nrs.urls")),
+    path("sbsApi/", include("sbs.urls")),
 ]

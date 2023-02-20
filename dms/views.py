@@ -1,46 +1,105 @@
-from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.viewsets import ModelViewSet
-from .models import Employee,Role,Node, RoleNode,Document,Folder,File,RoleFolder,Site,Project
+from .models import Employee,Role,Node, RoleNode,Document,Folder,File,RoleFolder,Site,Project,FileCount
 from .serializers import EmployeeModelSerializer,RoleModelSerializer,NodeModelSerializer,RoleNodeModelSerializer,UserModelSerializer
-from .serializers import DocumentModelSerializer,FolderModelSerializer,FileModelSerializer,RoleFolderModelSerializer,FileSerializer
-from .serializers import SiteModelSerializer,ProjectModelSerializer
-from django.http import HttpResponse
-from rest_framework import status
+from .serializers import DocumentModelSerializer,FolderModelSerializer,RoleFolderModelSerializer,FileSerializer
+from .serializers import SiteModelSerializer,ProjectModelSerializer,FileCountSerializer
 from rest_framework.authentication import BasicAuthentication, SessionAuthentication, TokenAuthentication
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
-from django.http import HttpResponse
-from django.template import loader
-from django.shortcuts import get_object_or_404, render
 import os
-from django.core import serializers
-import json
+from django.http import HttpResponse
+from wsgiref.util import FileWrapper
+import tempfile
+import zipfile
+from django.conf import settings
+import datetime
+
 
 
 def test01(request):
-    folder = Folder.objects.all()
-    output = ', '.join([q.name for q in folder])
-    return render(request, 'dms/test.html',{'folder':folder})
-    #return HttpResponse(output)
+
+    forder_id = 16
+
+    temp = tempfile.TemporaryFile()
+    archive = zipfile.ZipFile(temp, 'w', zipfile.ZIP_DEFLATED)
+    file = File.objects.filter(folder_id = forder_id)
+
+    for f in file:
+        file_path= os.path.join(settings.MEDIA_ROOT, f.upload.path)
+        file_name = getFileName(forder_id,f.name)
+        archive.write(file_path, file_name)
+    archive.close()
+    lenth = temp.tell()
+    temp.seek(0)
+    wrapper = FileWrapper(temp)
+    response = HttpResponse(wrapper, content_type='application/zip')
+    response['Content-Disposition'] = 'attachment; filename=archive.zip'
+    response['Content-Length'] = lenth  # temp.tell()
+    return response
+
 
 def test02(request):
-    folder = Folder.objects.all()
-    output = ', '.join([q.name for q in folder])
-    return render(request, 'dms/testSite.html',{'folder':folder})
-    #return HttpResponse(output)
+    id = 16
+    f = Folder.objects.get(pk=id)
+    ids = []
+    if f.p_id == 0:
+      folders = Folder.objects.filter(p_id=id)
+      for cf in folders:
+            ids.append(cf.id)
+
+      if len(ids) > 0:
+         files = File.objects.filter(folder_id__in=ids)
 
 
-def testSite(request):
-    data = Site.objects.all()
-    list = []
-    for d1 in data:
-        tinydict = {'id': d1.id, 'text': d1.name, 'expanded':True}
-        list.append(tinydict)
-    return render(request, 'dms/testSite.html', {'output': list})
+    return  HttpResponse('ok')
 
 
+def zipDownload(request, folder_id,projekt_id):
+    projekt_id = projekt_id
+    folder_id = folder_id
+    file = []
+    if folder_id == 0:
+        file = File.objects.filter(projekt_id=projekt_id)
+    else:
+        f = Folder.objects.get(pk=folder_id)
+        ids = []
+        if f.p_id == 0:
+          folders = Folder.objects.filter(p_id=folder_id)
+          for cf in folders:
+                ids.append(cf.id)
+
+          if len(ids) > 0:
+            file = File.objects.filter(folder_id__in=ids).filter(projekt_id=projekt_id)
+          else:
+            file = File.objects.filter(folder_id=folder_id).filter(projekt_id=projekt_id)
+
+    temp = tempfile.TemporaryFile()
+    archive = zipfile.ZipFile(temp, 'w', zipfile.ZIP_DEFLATED)
+    for f in file:
+        file_path = os.path.join(settings.MEDIA_ROOT, f.upload.path)
+        file_name = getFileName(f.folder_id, f.name,projekt_id)
+        archive.write(file_path, file_name)
+    archive.close()
+    lenth = temp.tell()
+    temp.seek(0)
+    wrapper = FileWrapper(temp)
+    response = HttpResponse(wrapper, content_type='application/zip')
+    response['Content-Disposition'] = 'attachment; filename=zipDownload.zip'
+    response['Content-Length'] = lenth  # temp.tell()
+    return response
+
+
+def getFileName(id, file_name,projekt_id):
+    name = ''
+    f = Folder.objects.get(pk=id)
+    name = os.path.join(f.name, file_name)
+    if f.p_id > 0:
+        pf = Folder.objects.get(pk=f.p_id)
+        name1 = os.path.join(pf.name, name)
+       #name = os.path.join(str(projekt_id), name1)
+    return name1
 
 
 
@@ -104,7 +163,6 @@ def test(request):
     return HttpResponse(base)
 
 
-
 class UserViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserModelSerializer
@@ -156,10 +214,15 @@ class FolderViewSet(ModelViewSet):
     queryset = Folder.objects.all()
     serializer_class = FolderModelSerializer
 
-class FileViewSet(ModelViewSet):
-   # queryset = File.objects.all()
-   queryset = File.objects.order_by("-id")
-   serializer_class = FileModelSerializer
+    def get_queryset(self):
+        doku_container_id = self.request.query_params.get('doku_container_id')
+        if doku_container_id == '':
+            return  Folder.objects.all()
+        elif doku_container_id is None:
+            return Folder.objects.all()
+        else:
+            return Folder.objects.filter(doku_container_id = doku_container_id)
+
 
 
 class RoleFolderViewSet(ModelViewSet):
@@ -175,10 +238,28 @@ class RoleFolderViewSet(ModelViewSet):
         else:
             return RoleFolder.objects.filter(role_id=role_id)
 
-
-
-
-
 class FileViewSet(ModelViewSet):
+
     queryset = File.objects.all()
     serializer_class = FileSerializer
+    def get_queryset(self):
+        projekt_id = self.request.query_params.get('projekt_id')
+        if projekt_id == '':
+            return  File.objects.all()
+        elif projekt_id is None:
+            return File.objects.all()
+        else:
+            return File.objects.filter(projekt_id = projekt_id)
+
+class FileCountViewSet(ModelViewSet):
+
+    queryset = FileCount.objects.all()
+    serializer_class = FileCountSerializer
+    def get_queryset(self):
+        projekt_id = self.request.query_params.get('projekt_id')
+        if projekt_id == '':
+            return  FileCount.objects.all()
+        elif projekt_id is None:
+            return FileCount.objects.all()
+        else:
+            return FileCount.objects.filter(projekt_id = projekt_id)

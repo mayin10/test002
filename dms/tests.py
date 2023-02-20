@@ -2,7 +2,7 @@ import os
 
 
 
-base = os.path.abspath('..')+"\\static\\DOKUMENTE\\123990708"
+base = os.path.abspath('..')+"\\media\\zip"
 print(base)
 
 for dirpath, dirnames, filenames in os.walk(base):

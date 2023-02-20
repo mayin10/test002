@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Employee,Role,Node, RoleNode,Document,Folder,File,RoleFolder,Site,Project
+from .models import Employee,Role,Node, RoleNode,Document,Folder,File,RoleFolder,Site,Project,FileCount
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 
@@ -54,12 +54,6 @@ class SiteModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Site
         fields = ["id", "name"]
-
-
-
-
-
-
 class DocumentModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Document
@@ -74,20 +68,15 @@ class ProjectModelSerializer(serializers.ModelSerializer):
 class FolderModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Folder
-        fields = ["id","p_id", "name","projectID"]
+        fields = ["id", "name","p_id", "doku_container_id"]
 
-class FileModelSerializer(serializers.ModelSerializer):
 
-    document = DocumentModelSerializer(read_only=True, many=False)
-    folder = FolderModelSerializer(read_only=True, many=False)
-    class Meta:
-        model =  File
-        fields = "__all__"
 
 class RoleFolderModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = RoleFolder
         fields = "__all__"
+
 
 
 class FileSerializer(serializers.ModelSerializer):
@@ -102,3 +91,9 @@ class FileSerializer(serializers.ModelSerializer):
         uploadFile.size = file.size
         uploadFile.save()
         return uploadFile
+
+
+class FileCountSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FileCount
+        fields = "__all__"

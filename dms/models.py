@@ -85,7 +85,7 @@ class Folder(BaseModel):
     p_id = models.IntegerField(default=0)
     level = models.IntegerField(default=0)
     sort = models.IntegerField(default=50)
-    projectID = models.IntegerField(default=0)
+    doku_container_id = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name
@@ -103,23 +103,25 @@ class RoleFolder(BaseModel):
     right = models.SmallIntegerField(default=1, choices=right_choices, verbose_name='right')
 
 
+class FileCount(models.Model):
+    folder_id = models.IntegerField(default=0)
+    projekt_id = models.IntegerField(default=0)
+    count= models.IntegerField(default=0)
+    def __str__(self):
+        return self.folder_id
+
+    class Meta:
+        ordering = ['folder_id']
+
 class File(BaseModel):
-    type_choices = (
-        (1, 'doc'),
-        (2, 'excel'),
-        (3, 'pdf'),
-        (4, 'image'),
-        (5, 'dwg'),
-    )
     name = models.CharField(max_length=200, default='')
     upload = models.FileField(upload_to='uploads/')
     size = models.CharField(max_length=100)
     version = models.IntegerField(default=0)
     document = models.ForeignKey(Document, on_delete=models.CASCADE)
     folder = models.ForeignKey(Folder, on_delete=models.CASCADE)
-    type = models.SmallIntegerField(default=1, choices=type_choices, verbose_name='type')
-    note = models.TextField(help_text="note", verbose_name="note")
-
+    projekt_id = models.IntegerField(default=0)
+    is_history = models.BooleanField(default=False, verbose_name='history')
     def __str__(self):
         return self.name
 

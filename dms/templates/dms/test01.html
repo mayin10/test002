@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<ul>
+    {{count}}
+  {% for f in folder %}
+    <li>{{f.id}}--{{f.name}}-- {{f.c_ids}} -- {{f.file_count}}</li>
+    <ul>
+        {% for c in f.children %}
+         <li>{{c.id}}--{{c.name}}-- {{c.file_count}}</li>
+        {% endfor %}
+    </ul>
+
+
+{% endfor %}
+</ul>
+
+
+</body>
+</html>

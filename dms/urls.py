@@ -12,12 +12,13 @@ router.register(prefix="project", viewset=views.ProjectViewSet)
 router.register(prefix="document", viewset=views.DocumentViewSet)
 router.register(prefix="folder", viewset=views.FolderViewSet)
 router.register(prefix="file", viewset=views.FileViewSet)
+router.register(prefix="filecount", viewset=views.FileCountViewSet)
 router.register(prefix="role-folder", viewset=views.RoleFolderViewSet)
 
 urlpatterns = [
     path('test01', views.test01, name='test01'),
     path('test02', views.test02, name='test02'),
-    path('testsite', views.testSite, name='testSite'),
+    path('<int:folder_id>/<int:projekt_id>/zipDownload/', views.zipDownload, name='zipDownload'),
     path('test', views.test, name='test'),
     path("", include(router.urls))
 ]

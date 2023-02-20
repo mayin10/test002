@@ -44,8 +44,7 @@ INSTALLED_APPS = [
     'dms.apps.DmsConfig',
     'nrs.apps.NrsConfig',
     'rpt.apps.RptConfig',
-    'test01.apps.Test01Config',
-    'test02.apps.Test02Config',
+    'sbs.apps.SbsConfig',
 
 ]
 
@@ -96,6 +95,14 @@ DATABASES = {
     'rpt': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': "rpt",
+        "HOST": "20.79.29.101",
+        "PORT": 3306,
+        "USER": "MEI_AN",
+        "PASSWORD": "test123",
+    },
+    'sbs': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': "sbs_dms",
         "HOST": "20.79.29.101",
         "PORT": 3306,
         "USER": "MEI_AN",
@@ -158,7 +165,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://108.143.98.40:80",
     "http://localhost:80",
     "http://localhost:5173",
-    "http://localhost:5076",
+    "http://localhost:9999",
     "http://127.0.0.1:80",
     "http://127.0.0.1",
 
@@ -172,7 +179,7 @@ CORS_ALLOWED_ORIGINS = [
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
-    "PAGE_SIZE": 100,
+    "PAGE_SIZE": 500,
     "DATETIME_FORMAT": "%Y-%m-%d %H:%M:%S",
     "DEFAULT_RENDERER_CLASSES": [
         "rest_framework.renderers.JSONRenderer",
